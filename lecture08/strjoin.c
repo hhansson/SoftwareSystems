@@ -32,7 +32,7 @@ char *strjoin(char *array[], int n)
         thelength += strlen(array[i]);
     }
     
-    buf = (char *) malloc (total * sizeof(char));
+    buf = (char *) malloc (thelength * sizeof(char));
     buf[0] = '\0';
     dest = buf;
     
