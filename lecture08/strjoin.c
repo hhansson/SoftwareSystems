@@ -20,10 +20,28 @@ char *tracks[] = {
 /* Returns a heap-allocated string that contains the strings 
    from the given array, joined up with no spaces between.
 */
+
+
 char *strjoin(char *array[], int n)
 {
-    // TODO: fill this in
-    return NULL;
+    int i;
+    int thelength=1;
+    char *buf, *dest;
+    
+    for (i=0; i<n; i++){
+        thelength += strlen(array[i]);
+    }
+    
+    buf = (char *) malloc (total * sizeof(char));
+    buf[0] = '\0';
+    dest = buf;
+    
+    for (i=0; i<n; i++){
+        strcot(destm array[i]);
+        dest += strlen(array[i]);
+    }
+        
+    return buf;
 }
 
 
