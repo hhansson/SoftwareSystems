@@ -10,7 +10,7 @@ License: Creative Commons Attribution-ShareAlike 3.0
 #include <string.h>
 #include <regex.h>
 
-#define NUM_TRACKS 5;
+#define NUM_TRACKS 5
 
 char tracks[][80] = {
     "So What",
@@ -21,30 +21,17 @@ char tracks[][80] = {
 };
 
 
-// Finds all tracks that contain the given string.
-//
-// Prints track number and title.
-void find_track(char *search_for)
-{
-    int i;
-    for (i=0; i<NUM_TRACKS; i++) {
-	if (strstr(tracks[i], search_for)) {
-	    printf("Track %i: '%s'\n", i, tracks[i]);
-	}
-    }
-}
-
-
 // Finds all tracks that match the given pattern.
 //
 // Prints track number and title.
-void find_track_regex(char *pattern)
+void find_track_regex(char pattern[])
 {
-    int i, ret;
+    int i;
     regex_t regex;
-    char *msgbuf;
+    int ret;
+    char msgbuf[100];
 
-    ret = regcomp(&regex, pattern, REG_EXTENDED || REG_NOSUB);
+    ret = regcomp(&regex, pattern, REG_EXTENDED | REG_NOSUB);
     if (ret) {
         fprintf(stderr, "Could not compile regex\n");
         exit(1);
@@ -52,17 +39,6 @@ void find_track_regex(char *pattern)
 
     for (i=0; i<NUM_TRACKS; i++) {
         ret = regexec(&regex, tracks[i], 0, NULL, 0);
-<<<<<<< HEAD
-	   if (!ret) {
-	       printf("Track %i: '%s'\n", i, tracks[i]);
-	   } else if (ret == REG_NOMATCH) {
-	       continue;
-	   } else {
-           regerror(ret, &regex, msgbuf, sizeof(msgbuf));
-           fprintf(stderr, "Regex match failed: %s\n", msgbuf);
-	   exit(1);
-	   }
-=======
 	if (!ret) {
 	    printf("Track %i: '%s'\n", i, tracks[i]);
 	} else if (ret == REG_NOMATCH) {
@@ -72,22 +48,18 @@ void find_track_regex(char *pattern)
            fprintf(stderr, "Regex match failed: %s\n", msgbuf);
 	   exit(1);
 	}
->>>>>>> 4aef9a2dead75b19d72ccc9cf4bf52f02c1342c6
     }
 
     /* I'm not sure this is necessary, but it's possible that if you
        let regex go out of scope without running regfree, it leaks
        (that is, leaves some allocated memory unfreed). */
-    regfree(regex);
+    regfree(&regex);
 }
 
 
 int main (int argc, char *argv[])
 {
-    char *target = 'F';
-    char *pattern = "Fr.*Fr.*";
-
-    find_track(target);
+    char *pattern = "F.*F.*";
     find_track_regex(pattern);
 
     return 0;

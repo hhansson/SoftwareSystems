@@ -18,6 +18,7 @@ License: Creative Commons Attribution-ShareAlike 3.0
 
 char *center(char *s, int n, char fillchar)
 {
+<<<<<<< HEAD
     int st_length = strlen(s);
     int fill_num = n - st_length;
     char fill1;
@@ -43,6 +44,8 @@ char *center(char *s, int n, char fillchar)
         return s;
     }
 
+=======
+>>>>>>> 4aef9a2dead75b19d72ccc9cf4bf52f02c1342c6
     // FILL THIS IN
     //    return NULL;
 }

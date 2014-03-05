@@ -39,6 +39,30 @@ void find_track(char search_for[])
 void find_track_regex(char pattern[])
 {
     // TODO: fill this in
+    regex_t regex;
+    int
+
+    reti = regcomp(&regex, pattern, 0);
+
+    if( reti ){
+        fprintf(stderr, "Could not compile regex\n");
+        exit(1);
+    }
+    for (i=0; i<5; i++){
+        reti = regexec(&regex, tracks[i], 0, NULL, 0);
+        if( !reti ){
+                printf("Match: '%s'\n", tracks[i]);
+        }
+        else if( reti == REG_NOMATCH ){
+                printf("No match");
+                continue;
+        }
+        else{
+                regerror(reti, &regex, msgbuf, sizeof(msgbuf));
+                fprintf(stderr, "Regex match failed: %s\n", msgbuf);
+                exit(1);
+        }
+    }
 }
 
 // Truncates the string at the first newline, if there is one.
