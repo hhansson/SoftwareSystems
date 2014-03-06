@@ -92,7 +92,7 @@ double my_random_double()
   // TODO: fill this in
   int x;
   int mant;
-  int exp = 126;
+  long exp = 1022;
   int mask = 1;
 
   union {
