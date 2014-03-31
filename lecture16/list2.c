@@ -108,6 +108,7 @@ void reverse(Node **head) {
 // Returns 0 if successful, -1 if the index is out of range.
 int insert_by_index(Node **head, int val, int index) {
     // FILL THIS IN
+<<<<<<< HEAD
     head->index;
     currPtr = head;
 
@@ -119,6 +120,9 @@ int insert_by_index(Node **head, int val, int index) {
     }
     while (index !< val) || (index !> 0)
         return -1;
+=======
+    return -1;
+>>>>>>> 5fcd4dcc309f82c8a4d7288ecc00cec4f0bbc6e9
 }
 
 // Makes a mysterious data structure.
