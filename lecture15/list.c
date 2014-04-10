@@ -1,3 +1,4 @@
+
 /* Example code for Software Systems at Olin College.
 
 Based on an example from http://www.learn-c.org/en/Linked_lists
@@ -34,14 +35,15 @@ void print_list(Node *head) {
 int pop(Node **head) {
     int retval;
     Node *next_node;
+    Node *first = *head;
 
     if (*head == NULL) {
         return -1;
     }
 
-    next_node = (*head)->next;
-    retval = (*head)->val;
-    free(*head);
+    next_node = (first)->next;
+    retval = (first)->val;
+    free(first);
     *head = next_node;
 
     return retval;
@@ -50,18 +52,25 @@ int pop(Node **head) {
 // Add a new element to the beginning of the list.
 void push(Node **head, int val) {
     // FILL THIS IN!
+    Node *new = make_node(val, *head);
+    head = *new;
 }
 
 // Remove the first element with the given value; return the number
 // of nodes removed.
 int remove_by_value(Node **head, int val) {
     // FILL THIS IN!
+
     return 0;
 }
 
 // Reverse the elements of the list without allocating new nodes.
 void reverse(Node **head) {
     // FILL THIS IN!
+    Node *node = head;
+    
+    head = make_node(*head, val);
+    remove_by_value(head, val);
 }
 
 

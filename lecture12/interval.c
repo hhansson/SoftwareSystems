@@ -39,7 +39,7 @@ typedef struct {
 // If unable to allocate, prints an error message and exits.
 Interval *make_interval(time_t start, time_t end) {
     // fill this in
-    return NULL;
+        return NULL;
 }
 
 // Computes the duration of an Interval using difftime.

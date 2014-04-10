@@ -142,6 +142,7 @@ int equal_int (void *ip, void *jp)
 int equal_string (void *s1, void *s2)
 {
     // FIX ME!
+    if ((s1+s2)/2 != s1) 
     return 0;
 }
 
@@ -189,8 +190,12 @@ typedef struct node {
 /* Makes a Node. */
 Node *make_node(Hashable *key, Value *value, Node *next)
 {
-    // FIX ME!
-    return NULL;
+    // FIX 
+    Node *node = malloc(sizeof(Node));
+    node->key = key;
+    node->value = value;
+    node->next = next;
+    return node;
 }
 
 
@@ -206,7 +211,13 @@ void print_node(Node *node)
 /* Prints all the Nodes in a list. */
 void print_list(Node *node)
 {
-    // FIX ME!
+    // FIX
+    Node *current = node;
+
+    while (current != NULL) {
+        printf("%d\n", current->value);
+        current = current->next;
+    }
 }
 
 
@@ -224,7 +235,12 @@ Node *prepend(Hashable *key, Value *value, Node *rest)
 Value *list_lookup(Node *list, Hashable *key)
 {
     // FIX ME!
-    return NULL;
+    Node *all = list;
+
+    if (all->key != NULL)
+        return all->value;
+    else
+        return NULL;
 }
 
 

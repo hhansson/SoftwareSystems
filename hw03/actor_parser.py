@@ -107,5 +107,3 @@ class ActorsParser(BaseParser):
         else:
             logging.critical("This line is fucked up: " + matcher.get_last_string())
             self.fucked_up_count += 1
-
-print sql_file
