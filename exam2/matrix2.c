@@ -169,6 +169,7 @@ double *row_sum(Matrix *A) {
    Feel free to use row_sum().
 */
 
+<<<<<<< HEAD
 int is_magic_square(Matrix *A) {
     int i, j, k, f, done=0;
     double final, prev_final;
@@ -197,6 +198,8 @@ int is_magic_square(Matrix *A) {
 
 }
 
+=======
+>>>>>>> 40367584460659dcba8c8efaf93cc5334bb982e7
 
 int main() {
     int i;

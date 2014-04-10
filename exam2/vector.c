@@ -7,7 +7,10 @@ License: Creative Commons Attribution-ShareAlike 3.0
 
 
 #include "stdio.h"
+<<<<<<< HEAD
 #include "stdlib.h"
+=======
+>>>>>>> 40367584460659dcba8c8efaf93cc5334bb982e7
 
 typedef struct {
     double *data;
@@ -18,7 +21,11 @@ typedef struct {
 Vector *make_vector(int len) {
     Vector *vector = malloc(sizeof(Vector));
 
+<<<<<<< HEAD
     vector->data = calloc(len, sizeof(double *));
+=======
+    vector->data = calloc(len * sizeof(double *));
+>>>>>>> 40367584460659dcba8c8efaf93cc5334bb982e7
     vector->len = len;
     return vector;
 }
@@ -73,7 +80,11 @@ double *add_vector_func(Vector *A, Vector *B) {
     add_vector(A, B, C);
 }
 
+<<<<<<< HEAD
 int main (){
+=======
+int main {
+>>>>>>> 40367584460659dcba8c8efaf93cc5334bb982e7
     Vector *A = make_vector(4);
     consecutive_vector(A);
     printf("A\n");
@@ -92,5 +103,9 @@ int main (){
     free_vector(B);
     free_vector(C);
 
+<<<<<<< HEAD
     return 0;
+=======
+    return 0
+>>>>>>> 40367584460659dcba8c8efaf93cc5334bb982e7
 }
