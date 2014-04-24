@@ -5,15 +5,14 @@
 #include <errno.h>
 #include <sys/time.h>
 #include <sys/types.h>
-<<<<<<< HEAD
-//#include <wait.h>
-=======
 #include <wait.h>
->>>>>>> 62426f37ec410a06ad7938e0699b40b2f66ab905
 
 // errno is an external global variable that contains
 // error information
 extern int errno;
+
+int shared_int = 17;
+int *int_pointer = NULL;
 
 // get_seconds returns the number of seconds since the
 // beginning of the day, with microsecond precision
@@ -29,6 +28,10 @@ void child_code(int i)
 {
   sleep (i);
   printf ("Hello from child %d.\n", i);
+  shared_int += 23 + i;
+  printf ("child shared_int is %d\n", shared_int);
+  *int_pointer += 1;
+  printf ("child int_pointer %d\n", *int_pointer);
   exit (i);
 }
 
@@ -41,6 +44,9 @@ int main (int argc, char *argv[])
   pid_t pid;
   double start, stop;
   int i, num_children;
+
+  int_pointer = malloc(sizeof(int));
+  *int_pointer = 42;
 
   // the first command-line argument is the name of the executable.
   // if there is a second, it is the number of children to create.
@@ -91,6 +97,9 @@ int main (int argc, char *argv[])
   // compute the elapsed time
   stop = get_seconds ();
   printf ("Elapsed time = %f seconds.\n", stop - start);
+
+  printf ("parent shared_int is %d\n", shared_int);
+  printf ("parent int_pointer %d\n", *int_pointer);
 
   exit (0);
 }

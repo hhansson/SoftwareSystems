@@ -1,7 +1,6 @@
-/*     This file contains an example program from The Little Book of
-    Semaphores, available from Green Tea Press, greenteapress.com
+/* Example code for Software Systems at Olin College.
 
-Copyright 2014 Allen B. Downey
+Copyright 2012 Allen Downey
 License: Creative Commons Attribution-ShareAlike 3.0
 
 */
@@ -9,41 +8,15 @@ License: Creative Commons Attribution-ShareAlike 3.0
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include <semaphore.h>
+#include "semaphore.h"
 
 #define NUM_CHILDREN 2
-
-void perror_exit (char *s)
-{
-  perror (s);  exit (-1);
-}
-
-void *check_malloc(int size)
-{
-  void *p = malloc (size);
-  if (p == NULL) perror_exit ("malloc failed");
-  return p;
-}
-
-typedef sem_t Semaphore;
-
-Semaphore *make_semaphore (int n)
-{
-  Semaphore *sem = check_malloc (sizeof(Semaphore));
-  int ret = sem_init(sem, 0, n);
-  if (ret == -1) perror_exit ("sem_init failed");
-  return sem;
-}
-
-int sem_signal(Semaphore *sem)
-{
-  return sem_post(sem);
-}
 
 typedef struct {
   int counter;
   int end;
   int *array;
+  Semaphore *mutex;
 } Shared;
 
 Shared *make_shared (int end)
@@ -58,6 +31,7 @@ Shared *make_shared (int end)
   for (i=0; i<shared->end; i++) {
     shared->array[i] = 0;
   }
+  shared->mutex = make_semaphore(1);
   return shared;
 }
 
@@ -79,25 +53,23 @@ void join_thread (pthread_t thread)
 
 void child_code (Shared *shared)
 {
-<<<<<<< HEAD
-  //printf ("Starting child at counter %d\n", shared->counter);
-=======
+  int index;
+
   printf ("Starting child at counter %d\n", shared->counter);
->>>>>>> 62426f37ec410a06ad7938e0699b40b2f66ab905
 
   while (1) {
-    if (shared->counter >= shared->end) {
+    sem_wait(shared->mutex);
+    index = shared->counter++;
+    sem_signal(shared->mutex);
+
+    if (index >= shared->end) {
       return;
     }
-    shared->array[shared->counter]++;
-    shared->counter++;
 
-    if (shared->counter % 10000 == 0) {
-<<<<<<< HEAD
-      //printf ("%d\n", shared->counter);
-=======
-      printf ("%d\n", shared->counter);
->>>>>>> 62426f37ec410a06ad7938e0699b40b2f66ab905
+    shared->array[index]++;
+
+    if (index % 10000 == 0) {
+      printf ("%d\n", index);
     }
   }
 }
@@ -106,11 +78,7 @@ void *entry (void *arg)
 {
   Shared *shared = (Shared *) arg;
   child_code (shared);
-<<<<<<< HEAD
-  //printf ("Child done.\n");
-=======
   printf ("Child done.\n");
->>>>>>> 62426f37ec410a06ad7938e0699b40b2f66ab905
   pthread_exit (NULL);
 }
 
@@ -118,20 +86,12 @@ void check_array (Shared *shared)
 {
   int i, errors=0;
 
-<<<<<<< HEAD
-  //printf ("Checking...\n");
-=======
   printf ("Checking...\n");
->>>>>>> 62426f37ec410a06ad7938e0699b40b2f66ab905
 
   for (i=0; i<shared->end; i++) {
     if (shared->array[i] != 1) errors++;
   }
-<<<<<<< HEAD
-  //printf ("%d errors.\n", errors);
-=======
   printf ("%d errors.\n", errors);
->>>>>>> 62426f37ec410a06ad7938e0699b40b2f66ab905
 }
 
 int main ()
@@ -139,7 +99,7 @@ int main ()
   int i;
   pthread_t child[NUM_CHILDREN];
 
-  Shared *shared = make_shared (100000000);
+  Shared *shared = make_shared (100000);
 
   for (i=0; i<NUM_CHILDREN; i++) {
     child[i] = make_thread (entry, shared);
